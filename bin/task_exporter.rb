@@ -36,7 +36,7 @@ CSV.open(output, 'wb') do |csv|
     max_instances = 75 if ['once-per-student',
                            'multiple-per-student']
                           .any? { |tag| tags.include? tag }
-    max_instances = 1 if tags.include?('once-only')
+    max_instances = 1 if tags.include?('only-once')
     tags = filter_list(issue['labels'],
                        ['design', 'documentation',
                         'gci-2016', 'intro', 'outreach', 'qa', 'ui'])
