@@ -12,7 +12,7 @@ def filter_list(list, values = [])
   list.delete_if { |v| values.include? v }
 end
 require 'yaml'
-MENTOR_EMAILS = YAML::load(File.open(File.expand_path("mentors.yml")))
+MENTOR_EMAILS = YAML.load(File.open(File.expand_path('mentors.yml')))
 
 require 'csv'
 output = ARGV[0]
