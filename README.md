@@ -2,11 +2,13 @@
 
 This is a simple file we used for [GCI 2016](https://codein.withgoogle.com) to export our tasks to CSV.
 
+We needed to export our [Gitlab Issues](https://gitlab.com/librehealth/gci/issues) in order to import them into the GCI system.
+
 To run it:
 
 ``` shell
 $ bundle install
-$ ruby bin/task_exporter.rb
+$ ruby bin/task_exporter.rb /path/to/output.csv
 ```
 
 This will output to the current working directory. Simply change the `output` variable to the desired output.
