@@ -42,6 +42,7 @@ CSV.open(output, 'wb') do |csv|
     tags = filter_list(issue['labels'],
                        ['design', 'documentation',
                         'gci-2016', 'intro', 'outreach', 'qa', 'ui'])
-    csv << [name, description, max_instances, mentor, tags.join(','), beginner, categories.join(','), time_to_complete, nil] # rubocop:disable Metrics/LineLength
+    csv << [name, description, max_instances, mentor, tags.join(','),
+            beginner, categories.join(','), time_to_complete, nil]
   end
 end
