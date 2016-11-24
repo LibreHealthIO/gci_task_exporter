@@ -12,7 +12,7 @@ $ ruby bin/task_exporter.rb /path/to/output.csv
 ```
 Be sure to change the `project_id` variable in `bin/task_exporter.rb` to your project's id.
 
-This will output to the current working directory. Simply change the `output` variable to the desired output.
+This will output to the the file specified as the first command-line argument passed.
 
 There is a sample file [here](https://gitlab.com/librehealth/gci_task_exporter/blob/master/librehealth_gci_tasks.csv).
 
