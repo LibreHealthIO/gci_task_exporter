@@ -10,6 +10,7 @@ To run it:
 $ bundle install
 $ ruby bin/task_exporter.rb /path/to/output.csv
 ```
+Be sure to change the `project_id` variable in `bin/task_exporter.rb` to your project's id.
 
 This will output to the current working directory. Simply change the `output` variable to the desired output.
 
