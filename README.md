@@ -6,7 +6,7 @@ To run it:
 
 ``` shell
 $ bundle install
-$ ruby exporter.rb
+$ ruby bin/task_exporter.rb
 ```
 
 This will output to the current working directory. Simply change the `output` variable to the desired output.
