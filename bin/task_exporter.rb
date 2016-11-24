@@ -11,6 +11,8 @@ end
 def filter_list(list, values = [])
   list.delete_if { |v| values.include? v }
 end
+require 'yaml'
+MENTOR_EMAILS = YAML::load(File.open(File.expand_path("mentors.yml")))
 
 require 'csv'
 output = ARGV[0]
@@ -23,7 +25,7 @@ CSV.open(output, 'wb') do |csv|
     issue = issue.to_h
     name =  issue['title']
     description = "See #{issue['web_url']}"
-    mentor = issue['author']['username']
+    mentor = MENTOR_EMAILS[issue['author']['username']]
     tags = issue['labels']
     categories = []
     categories << 2 if %w(ui design)
