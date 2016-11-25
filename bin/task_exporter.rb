@@ -26,7 +26,7 @@ CSV.open(output, 'wb') do |csv|
     name =  issue['title']
     description = "See #{issue['web_url']}"
     mentor = MENTOR_EMAILS[issue['author']['username']]
-    tags = issue['labels']
+    tags = issue['labels'] << 'librehealth'
     categories = []
     categories << 2 if %w(ui design)
                        .any? { |tag| tags.include? tag } # User Interface
