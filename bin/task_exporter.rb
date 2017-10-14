@@ -4,7 +4,7 @@ Dotenv.load
 
 require 'gitlab'
 Gitlab.configure do |config|
-  config.endpoint       = 'https://gitlab.com/api/v3'
+  config.endpoint       = 'https://gitlab.com/api/v4'
   config.private_token  = ENV['GITLAB_ACCESS_TOKEN']
 end
 
@@ -23,10 +23,10 @@ CSV.open(output, 'wb') do |csv|
   issues = Gitlab.issues(project_id, per_page: 32, state: 'opened')
   issues.each do |issue|
     issue = issue.to_h
-    name =  issue['title']
+    name =  "LibreHealth: #{issue['title']}"
     description = "See #{issue['web_url']}"
     mentor = MENTOR_EMAILS[issue['author']['username']]
-    tags = issue['labels'] << 'librehealth'
+    tags = issue['labels']
     categories = []
     categories << 2 if %w(ui design)
                        .any? { |tag| tags.include? tag } # User Interface
