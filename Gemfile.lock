@@ -1,11 +1,16 @@
+GIT
+  remote: git://github.com/NARKOZ/gitlab.git
+  revision: facd74dffca3535f940448b7dcbd865f2c414d3c
+  specs:
+    gitlab (4.2.0)
+      httparty
+      terminal-table
+
 GEM
   remote: https://rubygems.org/
   specs:
     dotenv (2.1.1)
     fastercsv (1.5.5)
-    gitlab (4.2.0)
-      httparty
-      terminal-table
     httparty (0.15.6)
       multi_xml (>= 0.5.2)
     multi_xml (0.6.0)
@@ -19,7 +24,7 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   fastercsv
-  gitlab (~> 4.2)
+  gitlab!
 
 BUNDLED WITH
-   1.15.4
+   1.16.0.pre.3

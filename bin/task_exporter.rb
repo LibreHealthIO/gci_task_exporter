@@ -1,9 +1,7 @@
-# coding: utf-8
-require 'dotenv'
-Dotenv.load
-
 require 'gitlab'
 Gitlab.configure do |config|
+  require 'dotenv'
+  Dotenv.load
   config.endpoint       = 'https://gitlab.com/api/v4'
   config.private_token  = ENV['GITLAB_ACCESS_TOKEN']
 end
@@ -11,28 +9,48 @@ end
 def filter_list(list, values = [])
   list.delete_if { |v| values.include? v }
 end
+
 require 'yaml'
-MENTOR_EMAILS = YAML.load(File.open(File.expand_path('mentors.yml')))
+MENTOR_EMAILS = YAML.safe_load(File.open(File.expand_path('mentors.yml')))
+
+def mentors_for_task(issue)
+  mentors = issue['assignees'].map do |assignee|
+    username = assignee['username']
+    assignee = MENTOR_EMAILS[username]
+    raise "Mentor #{username} is not in mentors.yml." unless assignee
+    assignee
+  end
+  author = MENTOR_EMAILS[issue['author']['username']]
+  mentors << author unless mentors.include? author
+  mentors
+end
+
+def categories_for_task(tags)
+  categories = []
+  categories << 1 if tags.include?('coding') # Coding
+  categories << 2 if %w[ui design]
+                     .any? { |tag| tags.include? tag } # User Interface
+  categories << 3 if tags.include?('documentation') # Documentation & Training
+  categories << 4 if tags.include?('qa') # Quality Assurance
+  categories << 5 if tags.include?('outreach') # Outreach/Research
+  categories
+end
 
 require 'csv'
 output = ARGV[0]
 # change this to whatever yours is, librehealth/gci is 2016295
 project_id = 2_016_295
 CSV.open(output, 'wb') do |csv|
-  csv << %w(name description max_instances mentors tags is_beginner categories time_to_complete_in_days private_metadata) # rubocop:disable Metrics/LineLength
-  issues = Gitlab.issues(project_id, per_page: 32, state: 'opened')
+  csv << %w[name description max_instances mentors tags is_beginner
+            categories time_to_complete_in_days private_metadata]
+  issues = Gitlab.issues(project_id, per_page: 75, state: 'opened')
   issues.each do |issue|
     issue = issue.to_h
-    name =  "LibreHealth: #{issue['title']}"
+    name =  issue['title'].to_s
     description = "See #{issue['web_url']}"
-    mentor = MENTOR_EMAILS[issue['author']['username']]
+    mentors = mentors_for_task(issue)
     tags = issue['labels']
-    categories = []
-    categories << 2 if %w(ui design)
-                       .any? { |tag| tags.include? tag } # User Interface
-    categories << 3 if tags.include?('documentation') # Documentation & Training
-    categories << 4 if tags.include?('qa') # Quality Assurance
-    categories << 5 if tags.include?('outreach') # Outreach/Research
+    categories = categories_for_task(tags)
     beginner = tags.include?('intro') ? 'yes' : 'no'
     time_to_complete = 3
     max_instances = 75 if ['once-per-student',
@@ -40,9 +58,11 @@ CSV.open(output, 'wb') do |csv|
                           .any? { |tag| tags.include? tag }
     max_instances = 1 if tags.include?('only-once')
     tags = filter_list(issue['labels'],
-                       ['design', 'documentation',
-                        'gci-2016', 'intro', 'outreach', 'qa', 'ui'])
-    csv << [name, description, max_instances, mentor, tags.join(','),
-            beginner, categories.join(','), time_to_complete, nil]
+                       ['coding', 'design', 'documentation',
+                        "gci-#{Time.new.year}", 'intro',
+                        'outreach', 'qa', 'ui'])
+    csv << [name, description, max_instances, mentors.join(','),
+            tags.join(','), beginner, categories.join(','),
+            time_to_complete, nil]
   end
 end
