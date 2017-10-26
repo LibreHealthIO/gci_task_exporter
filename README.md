@@ -1,6 +1,6 @@
 # GCI Task Exporter for Gitlab Issues
 
-This is a simple file we used for [GCI 2016](https://codein.withgoogle.com) to export our tasks to CSV.
+This is a simple file we used for [Google Code-In](https://codein.withgoogle.com) to export our tasks to CSV.
 
 We needed to export our [Gitlab Issues](https://gitlab.com/librehealth/gci/issues) in order to import them into the GCI system.
 
@@ -8,7 +8,7 @@ To run it:
 
 ``` shell
 $ bundle install
-$ ruby bin/task_exporter.rb /path/to/output.csv
+$ bundle exec ruby bin/task_exporter.rb /path/to/output.csv
 ```
 Be sure to change the `project_id` variable in `bin/task_exporter.rb` to your project's id.
 
@@ -21,3 +21,7 @@ To use this, you must get a [Gitlab API access token](https://gitlab.com/profile
 Copy `.env.example` to `.env` and place your token there. `.env` is ignored by git.
 
 Copy `mentors.yml.example` to `mentors.yml` and add the gitlab usernames as the key and the value should be their GCI mentor email.
+
+# How mentors are determined
+
+Mentors are all assignees **PLUS** the author of the issue if they are not an assignee already.
