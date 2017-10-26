@@ -39,7 +39,7 @@ end
 require 'csv'
 output = ARGV[0]
 # change this to whatever yours is, librehealth/gci is 2016295
-project_id = 2_016_295
+project_id = ENV['GITLAB_PROJECT_ID']
 CSV.open(output, 'wb') do |csv|
   csv << %w[name description max_instances mentors tags is_beginner
             categories time_to_complete_in_days private_metadata]
