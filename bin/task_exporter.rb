@@ -17,7 +17,7 @@ def mentors_for_task(issue)
   mentors = issue['assignees'].map do |assignee|
     username = assignee['username']
     assignee = MENTOR_EMAILS[username]
-    raise "Mentor #{username} is not in mentors.yml." unless assignee
+    raise "Mentor #{username} is not in mentors.yml. Cannot proceed." unless assignee
     assignee
   end
   author = MENTOR_EMAILS[issue['author']['username']]
