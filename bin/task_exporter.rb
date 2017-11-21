@@ -28,7 +28,7 @@ end
 def categories_for_task(tags)
   categories = []
   categories << 1 if tags.include?('coding') # Coding
-  categories << 2 if %w[ui design]
+  categories << 2 if %w[ui/ux]
                      .any? { |tag| tags.include? tag } # User Interface
   categories << 3 if tags.include?('documentation') # Documentation & Training
   categories << 4 if tags.include?('qa') # Quality Assurance
@@ -60,7 +60,7 @@ CSV.open(output, 'wb') do |csv|
     tags = filter_list(issue['labels'],
                        ['coding', 'design', 'documentation',
                         "gci-#{Time.new.year}", 'intro',
-                        'outreach', 'qa', 'ui'])
+                        'outreach', 'qa', 'ui/ux'])
     csv << [name, description, max_instances, mentors.join(','),
             tags.join(','), beginner, categories.join(','),
             time_to_complete, nil]
