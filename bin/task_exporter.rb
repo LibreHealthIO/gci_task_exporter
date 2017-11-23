@@ -43,7 +43,7 @@ project_id = ENV['GITLAB_PROJECT_ID']
 CSV.open(output, 'wb') do |csv|
   csv << %w[name description max_instances mentors tags is_beginner
             categories time_to_complete_in_days private_metadata]
-  issues = Gitlab.issues(project_id, per_page: 75, state: 'opened')
+  issues = Gitlab.issues(project_id, per_page: 100, state: 'opened')
   issues.each do |issue|
     issue = issue.to_h
     name =  issue['title'].to_s
