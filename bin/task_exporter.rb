@@ -61,8 +61,16 @@ CSV.open(output, 'wb') do |csv|
                        ['coding', 'design', 'documentation',
                         "gci-#{Time.new.year}", 'intro',
                         'outreach', 'qa', 'ui/ux'])
-    csv << [name, description, max_instances, mentors.join(','),
-            tags.join(','), beginner, categories.join(','),
-            time_to_complete, nil]
+    if tags.include?('multiple-per-student')
+      30.times do
+        csv << [name, description, max_instances, mentors.join(','),
+                tags.join(','), beginner, categories.join(','),
+                time_to_complete, nil]
+      end
+    else
+      csv << [name, description, max_instances, mentors.join(','),
+              tags.join(','), beginner, categories.join(','),
+              time_to_complete, nil]
+      end
   end
 end
