@@ -43,7 +43,7 @@ project_id = ENV['GITLAB_PROJECT_ID']
 CSV.open(output, 'wb') do |csv|
   csv << %w[name description max_instances mentors tags is_beginner
             categories time_to_complete_in_days private_metadata]
-  issues = Gitlab.issues(project_id, per_page: 100, state: 'opened')
+  issues = Gitlab.issues(project_id, per_page: 200, state: 'opened')
   issues.each do |issue|
     issue = issue.to_h
     name =  issue['title'].to_s
@@ -62,7 +62,7 @@ CSV.open(output, 'wb') do |csv|
                         "gci-#{Time.new.year}", 'intro',
                         'outreach', 'qa', 'ui/ux'])
     if tags.include?('multiple-per-student')
-      30.times do
+      3.times do
         csv << [name, description, max_instances, mentors.join(','),
                 tags.join(','), beginner, categories.join(','),
                 time_to_complete, nil]
