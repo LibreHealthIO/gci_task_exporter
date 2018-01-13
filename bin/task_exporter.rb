@@ -59,7 +59,7 @@ CSV.open(output, 'wb') do |csv|
     max_instances = 1 if tags.include?('only-once')
     tags = filter_list(issue['labels'],
                        ['coding', 'design', 'documentation',
-                        "gci-#{Time.new.year}", 'intro',
+                        "gci-2017", 'intro',
                         'outreach', 'qa', 'ui/ux'])
     if tags.include?('multiple-per-student')
       3.times do
