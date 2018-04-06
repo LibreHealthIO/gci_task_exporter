@@ -1,17 +1,17 @@
 GIT
   remote: git://github.com/NARKOZ/gitlab.git
-  revision: facd74dffca3535f940448b7dcbd865f2c414d3c
+  revision: a52996f25b3b94768a05a8307147276bc73275db
   specs:
-    gitlab (4.2.0)
+    gitlab (4.3.0)
       httparty
       terminal-table
 
 GEM
   remote: https://rubygems.org/
   specs:
-    dotenv (2.1.1)
+    dotenv (2.2.1)
     fastercsv (1.5.5)
-    httparty (0.15.6)
+    httparty (0.16.2)
       multi_xml (>= 0.5.2)
     multi_xml (0.6.0)
     terminal-table (1.8.0)
