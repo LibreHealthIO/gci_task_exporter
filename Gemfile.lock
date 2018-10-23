@@ -1,22 +1,22 @@
 GIT
   remote: git://github.com/NARKOZ/gitlab.git
-  revision: a52996f25b3b94768a05a8307147276bc73275db
+  revision: 98673accc747f7dc7a6955c267010ff711ad30f2
   specs:
-    gitlab (4.3.0)
-      httparty
-      terminal-table
+    gitlab (4.6.1)
+      httparty (>= 0.14.0)
+      terminal-table (>= 1.5.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    dotenv (2.2.1)
+    dotenv (2.5.0)
     fastercsv (1.5.5)
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
     multi_xml (0.6.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
-    unicode-display_width (1.3.0)
+    unicode-display_width (1.4.0)
 
 PLATFORMS
   ruby
