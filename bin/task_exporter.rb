@@ -17,7 +17,10 @@ def mentors_for_task(issue)
   mentors = issue['assignees'].map do |assignee|
     username = assignee['username']
     assignee = MENTOR_EMAILS[username]
-    raise "Mentor #{username} is not in mentors.yml. Cannot proceed." unless assignee
+    unless assignee
+      raise "Mentor #{username} is not in mentors.yml. Cannot proceed."
+    end
+
     assignee
   end
   author = MENTOR_EMAILS[issue['author']['username']]
@@ -46,10 +49,10 @@ CSV.open(output, 'wb') do |csv|
   issues = Gitlab.issues(project_id, per_page: 200, state: 'opened')
   issues.each do |issue|
     issue = issue.to_h
-    name =  issue['title'].to_s
+    name =  "LibreHealth: #{issue['title']}"
     description = "See #{issue['web_url']}"
     mentors = mentors_for_task(issue)
-    tags = issue['labels']
+    tags = issue['labels'] << 'librehealth'
     categories = categories_for_task(tags)
     beginner = tags.include?('intro') ? 'yes' : 'no'
     time_to_complete = 3
@@ -59,7 +62,7 @@ CSV.open(output, 'wb') do |csv|
     max_instances = 1 if tags.include?('only-once')
     tags = filter_list(issue['labels'],
                        ['coding', 'design', 'documentation',
-                        "gci-2017", 'intro',
+                        'gci-2018', 'intro',
                         'outreach', 'qa', 'ui/ux'])
     if tags.include?('multiple-per-student')
       3.times do
@@ -71,6 +74,6 @@ CSV.open(output, 'wb') do |csv|
       csv << [name, description, max_instances, mentors.join(','),
               tags.join(','), beginner, categories.join(','),
               time_to_complete, nil]
-      end
+    end
   end
 end
